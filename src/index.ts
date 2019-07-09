@@ -1,4 +1,4 @@
-import * as _ from './util';
+import {isObject, isArrayLike, isRef, isElement} from './util';
 
 // https://facebook.github.io/react/docs/jsx-in-depth.html#booleans-null-and-undefined-are-ignored
 // Emulate JSX Expression logic to ignore certain type of children or className.
@@ -13,7 +13,7 @@ function isVisibleChild(value: any) {
 function className(value: any): string {
   if (Array.isArray(value)) {
     return value.map(className).filter(Boolean).join(' ');
-  } else if (_.isObject(value)) {
+  } else if (isObject(value)) {
     return Object.keys(value).filter((k) => value[k]).join(' ');
   } else if (isVisibleChild(value)) {
     return '' + value;
@@ -22,7 +22,7 @@ function className(value: any): string {
   }
 }
 
-export function Fragment(attr: {children: JSX.Element[]}) {
+export function Fragment(attr: {children: any}) {
   const fragment = document.createDocumentFragment();
   appendChildren(attr.children, fragment);
   return fragment;
@@ -37,13 +37,13 @@ export function createElement(tag: any, attr: any, ...children: any[]) {
     appendChildren(children, node);
   } else if (typeof tag === 'function') {
     // Custom elements
-    if (_.isObject(tag.defaultProps)) {
+    if (isObject(tag.defaultProps)) {
       attr = {...tag.defaultProps, ...attr};
     }
     node = tag({...attr, children});
   }
 
-  if (_.isRef(attr.ref)) {
+  if (isRef(attr.ref)) {
     attr.ref.current = node;
   } else if (typeof attr.ref === 'function') {
     attr.ref(node);
@@ -52,13 +52,13 @@ export function createElement(tag: any, attr: any, ...children: any[]) {
 }
 
 function appendChild(child: any, node: Node) {
-  if (_.isArrayLike(child)) {
+  if (isArrayLike(child)) {
     appendChildren(child as any, node);
   } else if (typeof child === 'string' || typeof child === 'number') {
     node.appendChild(document.createTextNode(child as any));
   } else if (child === null) {
     node.appendChild(document.createComment(''));
-  } else if (_.isElement(child)) {
+  } else if (isElement(child)) {
     node.appendChild(child);
   }
 }
@@ -94,7 +94,7 @@ function attribute(key: string, value: any, node: HTMLElement) {
     case 'ref':
     case 'namespaceURI': return;
     case 'style': {
-      if (_.isObject(value)) {
+      if (isObject(value)) {
         Object.assign(node.style, value);
       }
       return;

@@ -18,21 +18,17 @@ renderChunk = (code) ->
   code: transformed.code
   map: transformed.map
 
-rollupPluginExternal = ['tslib']
-
 build = (name, inject) ->
   try
     bundle = await rollup
       input: './src/index.ts'
-      external: rollupPluginExternal
       plugins: [
         ts(),
         replace(inject),
         { renderChunk },
         prettier(tabWidth: 2)
       ]
-    await bundle.write(format: 'cjs', file: "lib/#{name}.cjs.js")
-    await bundle.write(format: 'es', file: "lib/#{name}.js")
+    await bundle.write(format: 'es', file: "#{name}.js")
   catch e
     console.trace()
     console.error(e)
@@ -40,15 +36,8 @@ build = (name, inject) ->
 task 'build-slim', 'Build jsx-dom without SVG', ->
   await build('index', __SVG__: false)
 
-task 'build-svg', 'Build jsx-dom with SVG', ->
-  await build('svg', __SVG__: true)
-
 task 'build', 'Build everything', ->
   invoke('build-slim')
-  invoke('build-svg')
 
 task 'clean', 'Remove built files', ->
-  await fs.unlink('lib/index.cjs.js')
-  await fs.unlink('lib/index.js')
-  await fs.unlink('lib/svg.cjs.js')
-  await fs.unlink('lib/svg.js')
+  await fs.unlink('index.js')

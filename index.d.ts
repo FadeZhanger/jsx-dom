@@ -1,4 +1,4 @@
-declare module "jsx-dom" {
+declare module "@supersede/jsx-dom" {
   type TagMap = HTMLElementTagNameMap;
 
   export function createElement<Tag extends keyof TagMap>(
