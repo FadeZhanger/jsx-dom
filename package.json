@@ -48,7 +48,5 @@
     "url": "https://github.com/glixlur/jsx-dom/issues"
   },
   "homepage": "https://github.com/glixlur/jsx-dom#readme",
-  "dependencies": {
-    "tslib": "^1.9.3"
-  }
+  "dependencies": {}
 }
