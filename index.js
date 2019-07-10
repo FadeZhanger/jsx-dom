@@ -83,7 +83,7 @@ function appendChild(child, node) {
   if (isArrayLike(child)) {
     appendChildren(child, node);
   } else if (typeof child === "string" || typeof child === "number") {
-    node.appendChild(document.createTextNode(child));
+    node.appendChild(document.createTextNode(`${child}`));
   } else if (child === null) {
     node.appendChild(document.createComment(""));
   } else if (isElement(child)) {
