@@ -1,6 +1,6 @@
 {
   "name": "@supersede/jsx-dom",
-  "version": "6.3.9",
+  "version": "6.4.0",
   "description": "JSX to document.createElement.",
   "main": "index.js",
   "module": "index.js",

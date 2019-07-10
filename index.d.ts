@@ -40,6 +40,8 @@ declare module "@supersede/jsx-dom" {
 
     // TypeScript SVGElement has no `dataset` (Chrome 55+, Firefox 51+).
     type Element = NativeElement & {
+      /** @deprecated */
+      align: string;
       dataset: DOMStringMap;
     };
 
