@@ -145,9 +145,9 @@ function attribute(key, value, node) {
       const name = key.slice(2).toLowerCase();
       listen(node, name, value);
     }
-  } else if (value === true) {
-    node.setAttribute(key, "true");
-  } else if (value !== false && value !== null) {
+  } else if (typeof value === "boolean") {
+    node.setAttribute(key, value ? "true" : "false");
+  } else if (value !== null && value !== undefined) {
     node.setAttribute(key, value);
   }
 }

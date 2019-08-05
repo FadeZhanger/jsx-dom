@@ -1,13 +1,14 @@
 {
   "name": "@supersede/jsx-dom",
-  "version": "6.4.1",
+  "version": "6.4.2",
   "description": "JSX to document.createElement.",
   "main": "index.js",
   "module": "index.js",
   "scripts": {
     "build": "cake build",
     "pretest": "npm run build",
-    "test": "nyc --reporter=html mocha test/test.tsx --require test/register"
+    "test": "nyc --reporter=html mocha test/test.tsx --require test/register",
+    "pub": "npm publish --access public"
   },
   "keywords": [
     "jsx",
